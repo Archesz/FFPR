@@ -39,6 +39,9 @@
                     "Org": "Organization",
                     "Author": "Author(s)",
                     "Language": "Language",
+                    "Region": "Region",
+                    "Type": "Type",
+                    "Source": "Source",
                     "Button": "Access"
                 },
                 "Modal": "Link copied"
@@ -168,6 +171,9 @@
                     "Org": "Organização",
                     "Author": "Autor(es)",
                     "Language": "Linguagem",
+                    "Region": "Região",
+                    "Type": "Tipo",
+                    "Source": "Fonte",
                     "Button": "Acessar"
                 },
                 "Modal": "Link Copiado!"
@@ -297,6 +303,9 @@
                     "Org": "Organisation",
                     "Author": "Auteur",
                     "Language": "Langue",
+                    "Region": "Région",
+                    "Type": "Type",
+                    "Source": "Source",
                     "Button": "Accéder"
                 },
                 "Modal": "Lien copié"
@@ -425,6 +434,9 @@
                     "Org": "Organización",
                     "Author": "Autor",
                     "Language": "Idioma",
+                    "Region": "Región",
+                    "Type": "Tipo",
+                    "Source": "Fuente",
                     "Button": "Acceso"
                 },
                 "Modal": "Enlace copiado"
@@ -553,6 +565,9 @@
                     "Org": "संगठन",
                     "Author": "लेखक(लेखकों)",
                     "Language": "भाषा",
+                    "Region": "क्षेत्र",
+                    "Type": "प्रकार" ,
+                    "Source": "स्रोत",
                     "Button": "पहुंचें"
                 },
                 "Modal": "लिंक कॉपी किया गया"
@@ -681,6 +696,9 @@
                     "Org": "संगठन",
                     "Author": "लेखक(हरू)",
                     "Language": "भाषा",
+                    "Region": "क्षेत्र",
+                    "Type": "प्रकार",
+                    "Source": "स्रोत",                    
                     "Button": "पहुँच गर्नुहोस्"
                 },
                 "Modal": "लिङ्क प्रतिलिपि गरियो"

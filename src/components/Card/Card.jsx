@@ -1,39 +1,98 @@
 import React, { useEffect, useState } from 'react';
 import './Card.scss';
-import { MdOutlineShare, MdBookmarkBorder, MdBookmark } from "react-icons/md";
+import { MdOutlineShare } from "react-icons/md";
 import data from '../../data/infos.json';
 import { HiMiniCurrencyDollar } from "react-icons/hi2";
+import translate from '../../data/translate.json';
 
 const tagColors = data["en"]["Themes"];
 
+// Função para traduzir os temas
+const getTranslatedTheme = (theme, language) => {
+  const themeTranslations = translate["Themes"][theme];
+  if (!themeTranslations) return theme;
+
+  const languageIndex = {
+    "pt": 0,
+    "fr": 1,
+    "sp": 2,
+    "hi": 3,
+    "np": 4,
+  }[language];
+
+  return themeTranslations[languageIndex] || theme;
+};
+
+// Função para traduzir os tipos (types)
+const getTranslatedType = (type, language) => {
+  const typeTranslations = translate["Types"][type];
+  if (!typeTranslations) return type;
+
+  const languageIndex = {
+    "pt": 0,
+    "fr": 1,
+    "sp": 2,
+    "hi": 3,
+    "np": 4,
+  }[language];
+
+  return typeTranslations[languageIndex] || type;
+};
+
+// Função para traduzir as regiões (regions)
+const getTranslatedRegion = (region, language) => {
+  const regionTranslations = translate["Regions"][region];
+  if (!regionTranslations) return region;
+
+  const languageIndex = {
+    "pt": 0,
+    "fr": 1,
+    "sp": 2,
+    "hi": 3,
+    "np": 4,
+  }[language];
+
+  return regionTranslations[languageIndex] || region;
+};
+
+// Função para traduzir as fontes (sources)
+const getTranslatedSource = (source, language) => {
+  const sourceTranslations = translate["Sources"][source];
+  if (!sourceTranslations) return source;
+
+  const languageIndex = {
+    "pt": 0,
+    "fr": 1,
+    "sp": 2,
+    "hi": 3,
+    "np": 4,
+  }[language];
+
+  return sourceTranslations[languageIndex] || source;
+};
+
 function Card(props) {
   const [isSaved, setIsSaved] = useState(false);
-  const [showNotification, setShowNotification] = useState(false); // Estado para controlar a notificação
+  const [showNotification, setShowNotification] = useState(false);
 
-  let lang = props.lang
-  // Verifica se o card está salvo no localStorage ao carregar o componente
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('LocalCards')) || [];
     const cardIsSaved = savedCards.some(savedCard => savedCard.title === props.title);
     setIsSaved(cardIsSaved);
   }, [props.title]);
 
-  // Função para acessar o link do card
   function acessLink(link) {
     window.open(link, "_blank");
   }
 
-  // Função para salvar ou remover o card do localStorage
   function handleBookmark() {
     const savedCards = JSON.parse(localStorage.getItem('LocalCards')) || [];
 
     if (isSaved) {
-      // Se o card já está salvo, removê-lo do localStorage
       const updatedCards = savedCards.filter(savedCard => savedCard.title !== props.title);
       localStorage.setItem('LocalCards', JSON.stringify(updatedCards));
       setIsSaved(false);
     } else {
-      // Se o card não está salvo, adicioná-lo ao localStorage
       savedCards.push({
         title: props.title,
         tags: props.tags,
@@ -41,21 +100,20 @@ function Card(props) {
         author: props.author,
         year: props.year,
         language: props.language,
-        link: props.link
+        link: props.link,
+        region: props.region,
+        source: props.source,
+        type: props.type
       });
       localStorage.setItem('LocalCards', JSON.stringify(savedCards));
       setIsSaved(true);
     }
   }
 
-  // Função para copiar o link e exibir a notificação
   function handleShare() {
     navigator.clipboard.writeText(props.link)
       .then(() => {
-        // Exibe a notificação após o link ser copiado
         setShowNotification(true);
-
-        // Remove a notificação após 2 segundos
         setTimeout(() => {
           setShowNotification(false);
         }, 2000);
@@ -67,7 +125,6 @@ function Card(props) {
 
   return (
     <div className='card-container'>
-
       <div className='card-tag-paid'>
         {props.paid === 'Paywalled' ? <HiMiniCurrencyDollar className='icon-dolar'/> : (
           <span className={`card-paid ${props.paid}`}>{props.paid}</span>
@@ -87,32 +144,49 @@ function Card(props) {
               className='tag'
               style={{ backgroundColor: `${tagColors[tag]}` }}
             >
-              {tag}
+              {getTranslatedTheme(tag, props.lang)}
             </span>
           ))}
         </span>
       </div>
 
       <div className='card-organization-area'>
-        <span className='area-name'>{data[lang]["Texts"]["Projects"]["Card"]["Org"]}</span>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Org"]}</span>
         <span className='organization'>{props.organization}</span>
       </div>
 
       <div className='card-author-area'>
-        <span className='area-name'>{data[lang]["Texts"]["Projects"]["Card"]["Author"]}</span>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Author"]}</span>
         <div className='author-list'>
           <span className='author'>{props.author.join(', ')}</span>
         </div>
       </div>
 
       <div className='card-language-area'>
-        <span className='area-name'>{data[lang]["Texts"]["Projects"]["Card"]["Language"]}</span>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Language"]}</span>
         <div className='language-row'>
           <span className='language'>{props.language.join(", ")}</span>
         </div>
       </div>
 
-      <button className='btn-acess' onClick={() => acessLink(props.link)}>{data[lang]["Texts"]["Projects"]["Card"]["Button"]}</button>
+      <div className='card-region-area'>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Region"]}</span>
+        <span className='region'>
+          {props.region.map(region => getTranslatedRegion(region, props.lang)).join(" - ")}
+        </span>
+      </div>
+
+      <div className='card-type-area'>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Type"]}</span>
+        <span className='type'>{getTranslatedType(props.type, props.lang)}</span>
+      </div>
+
+      <div className='card-source-area'>
+        <span className='area-name'>{data[props.lang]["Texts"]["Projects"]["Card"]["Source"]}</span>
+        <span className='source'>{getTranslatedSource(props.source, props.lang)}</span>
+      </div>
+
+      <button className='btn-acess' onClick={() => acessLink(props.link)}>{data[props.lang]["Texts"]["Projects"]["Card"]["Button"]}</button>
 
       <div className='card-footer'>
         <span className='footer-btn share-btn' onClick={handleShare}>
@@ -120,10 +194,9 @@ function Card(props) {
         </span>
       </div>
 
-      {/* Notificação de "Link Copiado" */}
       {showNotification && (
         <div className='copy-notification'>
-          {data[lang]["Texts"]["Projects"]["Modal"]}
+          {data[props.lang]["Texts"]["Projects"]["Modal"]}
         </div>
       )}
     </div>

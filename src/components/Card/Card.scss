@@ -1,6 +1,6 @@
 .card-container {
   width: 100%;
-  max-width: 310px; // Limita o tamanho máximo do card
+  max-width: 310px;
   height: auto;
   border-radius: 10px;
   display: flex;
@@ -76,23 +76,25 @@
   .card-title-area {
     width: 100%;
     height: 75px;
-    overflow: hidden;
-    /* Esconde o conteúdo que passa do limite */
-    white-space: wrap;
-    /* Garante que o texto não será quebrado em várias linhas */
-    text-overflow: ellipsis;
-    /* Adiciona as reticências quando o texto for maior que o contêiner */
+    max-height: 75px; // Altura máxima do título
+    overflow: hidden; // Esconde o conteúdo que ultrapassa o limite
+    overflow-y: auto;
 
     .card-title {
       font-weight: bold;
       font-size: 16px;
       padding-bottom: 6px;
+      display: block; // Garante que o título seja tratado como um bloco
+      overflow: hidden; // Esconde o conteúdo que ultrapassa o limite
     }
   }
 
   .card-tags-area {
     display: flex;
     flex-direction: column;
+    height: 120px;
+    max-height: 120px;
+    overflow: auto;
 
     .tags {
       margin-top: 2px;
@@ -119,11 +121,8 @@
     flex-direction: column;
     font-size: 14px;
     overflow: hidden;
-    /* Esconde o conteúdo que passa do limite */
     white-space: wrap;
-    /* Garante que o texto não será quebrado em várias linhas */
     text-overflow: ellipsis;
-    /* Adiciona as reticências quando o texto for maior que o contêiner */
   }
 
   .card-organization-area {
@@ -189,7 +188,6 @@
   }
 
   .card-language-area {
-
     .language-row {
       display: flex;
       flex-direction: row;
@@ -236,7 +234,21 @@
   display: none;
 }
 
-.icon-dolar{
+.icon-dolar {
   font-size: 24px;
   color: var(#081950);
+}
+
+.card-region-area,
+.card-type-area,
+.card-source-area {
+  height: 60px;
+  margin-top: 5px;
+  gap: 6px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
 }

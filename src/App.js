@@ -5,6 +5,7 @@ import Projects from "./pages/Projects";
 import About from './pages/About'; // Importando a página About
 import Header from './components/Header/Header';
 import React, { useState } from "react";
+import CreateJson from './pages/CreateJson';
 
 function App() {
   const [selected, setSelected] = useState([]);
@@ -23,6 +24,8 @@ function App() {
 
           {/* Rota para a página About */}
           <Route path="/about" element={<About lang={language} />} />
+
+          <Route path="/create" element={<CreateJson />} />
         </Routes>
       </div>
 
